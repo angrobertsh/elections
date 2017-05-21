@@ -9,6 +9,7 @@ class FilterForm extends React.Component{
       voterParties: this.props.voterParties,
       candidateParties: this.props.candidateParties,
       states: this.props.states,
+      voteType: this.props.voteType,
       graphType: this.props.graphType
     };
     this.update = this.update.bind(this);
@@ -63,6 +64,7 @@ class FilterForm extends React.Component{
           //     <button className="submit-button">{ this.state.hours || this.state.days.length > 0 || this.state.food ? "This food at this time and date" : "Anything right now!" }</button>
           //   </div>
           // </div>
+//             <input type="radio" onChange={this.update("years")} value="summary" checked={this.state.years === "summary"} />Year Summary
 
 
   render() {
@@ -70,14 +72,46 @@ class FilterForm extends React.Component{
       <div className="filter-form-container" ref={ filterForm => this.filterForm = filterForm }>
         <form onSubmit={this.handleSubmit} id="filter-form">
           <div id="filter-form-years">
-            <header className="search-form-days">What years would you like to see?</header>
-            <input type="checkbox" onChange={this.update("years")} value="1900" checked={this.state.years.includes("1900")} />1900
-            <input type="checkbox" onChange={this.update("years")} value="1904" checked={this.state.years.includes("1904")} />1904
-            <input type="checkbox" onChange={this.update("years")} value="1908" checked={this.state.years.includes("1908")} />1908
-            <input type="checkbox" onChange={this.update("years")} value="1912" checked={this.state.years.includes("1912")} />1912
-            <input type="checkbox" onChange={this.update("years")} value="1916" checked={this.state.years.includes("1916")} />1916
-            <input type="checkbox" onChange={this.update("years")} value="1920" checked={this.state.years.includes("1920")} />1920
-            <input type="checkbox" onChange={this.update("years")} value="1924" checked={this.state.years.includes("1924")} />1924
+            <header className="filter-form-years">What years would you like to see?</header>
+            <input type="radio" onChange={this.update("years")} value="1900" checked={this.state.years === "1900"} />1900
+            <input type="radio" onChange={this.update("years")} value="1904" checked={this.state.years === "1904"} />1904
+            <input type="radio" onChange={this.update("years")} value="1908" checked={this.state.years === "1908"} />1908
+            <input type="radio" onChange={this.update("years")} value="1912" checked={this.state.years === "1912"} />1912
+            <input type="radio" onChange={this.update("years")} value="1916" checked={this.state.years === "1916"} />1916
+            <input type="radio" onChange={this.update("years")} value="1920" checked={this.state.years === "1920"} />1920
+            <input type="radio" onChange={this.update("years")} value="1924" checked={this.state.years === "1924"} />1924
+            <input type="radio" onChange={this.update("years")} value="1928" checked={this.state.years === "1928"} />1928
+            <input type="radio" onChange={this.update("years")} value="1932" checked={this.state.years === "1932"} />1932
+            <input type="radio" onChange={this.update("years")} value="1936" checked={this.state.years === "1936"} />1936
+            <input type="radio" onChange={this.update("years")} value="1940" checked={this.state.years === "1940"} />1940
+            <input type="radio" onChange={this.update("years")} value="1944" checked={this.state.years === "1944"} />1944
+            <input type="radio" onChange={this.update("years")} value="1948" checked={this.state.years === "1948"} />1948
+            <input type="radio" onChange={this.update("years")} value="1952" checked={this.state.years === "1952"} />1952
+            <input type="radio" onChange={this.update("years")} value="1956" checked={this.state.years === "1956"} />1956
+            <input type="radio" onChange={this.update("years")} value="1960" checked={this.state.years === "1960"} />1960
+            <input type="radio" onChange={this.update("years")} value="1964" checked={this.state.years === "1964"} />1964
+            <input type="radio" onChange={this.update("years")} value="1968" checked={this.state.years === "1968"} />1968
+            <input type="radio" onChange={this.update("years")} value="1972" checked={this.state.years === "1972"} />1972
+            <input type="radio" onChange={this.update("years")} value="1976" checked={this.state.years === "1976"} />1976
+            <input type="radio" onChange={this.update("years")} value="1980" checked={this.state.years === "1980"} />1980
+            <input type="radio" onChange={this.update("years")} value="1984" checked={this.state.years === "1984"} />1984
+            <input type="radio" onChange={this.update("years")} value="1988" checked={this.state.years === "1988"} />1988
+            <input type="radio" onChange={this.update("years")} value="1992" checked={this.state.years === "1992"} />1992
+            <input type="radio" onChange={this.update("years")} value="1996" checked={this.state.years === "1996"} />1996
+            <input type="radio" onChange={this.update("years")} value="2000" checked={this.state.years === "2000"} />2000
+            <input type="radio" onChange={this.update("years")} value="2004" checked={this.state.years === "2004"} />2004
+            <input type="radio" onChange={this.update("years")} value="2008" checked={this.state.years === "2008"} />2008
+            <input type="radio" onChange={this.update("years")} value="2012" checked={this.state.years === "2012"} />2012
+          </div>
+          <div id="filter-form-parties">
+            <header className="filter-form-parties">What votes would you like to see?</header>
+            <input type="checkbox" onChange={this.update("voterParties")} value="democrat" checked={this.state.voterParties.includes("democrat")} />Democrat votes
+            <input type="checkbox" onChange={this.update("voterParties")} value="republican" checked={this.state.voterParties.includes("republican")} />Republican votes
+          </div>
+          <div id="filter-form-parties">
+            <header className="filter-form-voteType">What type of votes would you like to see?</header>
+            <input type="checkbox" onChange={this.update("voteType")} value="electoral" checked={this.state.voterParties.includes("democrat")} />Electoral votes
+            <input type="checkbox" onChange={this.update("voteType")} value="popular" checked={this.state.voterParties.includes("republican")} />Popular votes
           </div>
           <button className="submit-button">Filter</button>
         </form>

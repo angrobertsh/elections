@@ -1,10 +1,11 @@
 import merge from 'lodash/merge';
 
 const defaultState = {
-  years: [],
+  years: "",
   voterParties: [],
   candidateParties: [],
   states: [],
+  voteType: "",
   graphType: ""
 };
 

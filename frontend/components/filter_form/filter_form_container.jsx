@@ -7,6 +7,7 @@ const mapStateToProps = state => ({
   voterParties: state.filters.voterParties,
   candidateParties: state.filters.candidateParties,
   states: state.filters.states,
+  voteType: state.filters.voteType,
   graphType: state.filters.graphType
 });
 

@@ -3,7 +3,8 @@ import Display from './display';
 import * as FILTER_ACTIONS from '../../actions/filter_actions';
 
 const mapStateToProps = state => ({
-  years: state.filters.years
+  filters: state.filters,
+  data: state.data
 });
 
 export default connect(
