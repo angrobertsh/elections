@@ -1,0 +1,33 @@
+.axis text {
+  stroke: #000;
+  stroke-width: .25;
+}
+
+.bar {
+  transition: all .5s;
+  opacity: .8;
+}
+
+.democrat {
+  fill: steelblue;
+}
+
+.democrat:hover {
+  fill: blue;
+}
+
+.other {
+  fill: yellow;
+}
+
+.other:hover {
+  fill: green;
+}
+
+.republican {
+  fill: red;
+}
+
+.republican:hover {
+  fill: darkred;
+}

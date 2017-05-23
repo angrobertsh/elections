@@ -5,83 +5,119 @@ class BarChart extends React.Component{
 
   constructor(props){
     super(props);
+    this.d3Render = this.d3Render.bind(this);
+    this.populateBars = this.populateBars.bind(this);
   }
 
-  componentDidMount(){
-    // const data = this.props.data;
-    // const labels = Object.keys(data.votes);
-    // const dataElectoralDemocratMap = labels.map((state) => (data.votes[state].electoral.democrat));
-    // const dataElectoralRepublicanMap = labels.map((state) => (data.votes[state].electoral.republican));
-    // const dataPopularDemocratMap = labels.map((state) => (data.votes[state].popular.democrat));
-    // const dataPopularRepublicanMap = labels.map((state) => (data.votes[state].popular.republican));
-    // const dataPopularOtherMap = labels.map((state) => (data.votes[state].popular.other));
-    //
-    // const width = 960,
-    //     barHeight = 20;
-    //
-    // const x = d3.scaleLinear()
-    //     .domain([0, d3.max(dataPopularDemocratMap.concat(dataPopularRepublicanMap).concat(dataPopularOtherMap))])
-    //     .range([0, width]);
-    //
-    // const chart = d3.select(".barchart")
-    //     .attr("width", width)
-    //     .attr("height", barHeight * labels.length);
-    //
-    // const bar = chart.selectAll("g")
-    //     .data(dataPopularDemocratMap)
-    //   .enter().append("g")
-    //     .attr("transform", function(d, i) { return "translate(0," + i * barHeight + ")"; });
-    //
-    // bar.append("rect")
-    //     .attr("width", x)
-    //     .attr("height", barHeight - 1);
-    //
-    // bar.append("text")
-    //     .attr("x", function(d) { return x(d) - 3; })
-    //     .attr("y", barHeight / 2)
-    //     .attr("dy", ".35em")
-    //     .text(function(d) { return d; });
-
-    const data = this.props.data;
+  d3Render(){
+    let filters = this.props.filters;
+    let data = this.props.data;
     const labels = Object.keys(data.votes);
-    const dataElectoralDemocratMap = labels.map((state) => (data.votes[state].electoral.democrat));
-    const dataElectoralRepublicanMap = labels.map((state) => (data.votes[state].electoral.republican));
-    const dataPopularDemocratMap = labels.map((state) => (data.votes[state].popular.democrat));
-    const dataPopularRepublicanMap = labels.map((state) => (data.votes[state].popular.republican));
-    const dataPopularOtherMap = labels.map((state) => (data.votes[state].popular.other));
+    // const dataElectoralDemocratMap = labels.map((state) => ({state: state, votes: data.votes[state].electoral.democrat}));
+    // const dataElectoralRepublicanMap = labels.map((state) => ({state: state, votes: data.votes[state].electoral.republican}));
+    // const dataPopularDemocratMap = labels.map((state) => ({state: state, votes: data.votes[state].popular.democrat}));
+    // const dataPopularRepublicanMap = labels.map((state) => ({state: state, votes: data.votes[state].popular.republican}));
+    // const dataPopularOtherMap = labels.map((state) => ({state: state, votes: data.votes[state].popular.other}));
+    let filteredData = {};
+    filters.voterParties.forEach((party) => {
+      if(data.votes["CA"][filters.voteType][party] > -1){
+        labels.forEach((state) => {filteredData[state] = filteredData[state] ? filteredData[state].concat({party: party, votes: data.votes[state][filters.voteType][party]}) : [{party: party, votes: data.votes[state][filters.voteType][party]}]});
 
-    const width = 960,
-        height = 500,
-        barWidth = width / labels.length;
+        // filteredData[party] = labels.map((state) => ({state: state, votes: data.votes[state][filters.voteType][party]}));
+      }
+    })
+
+    labels.forEach((state) => {
+      filteredData[state] = filteredData[state].sort((a, b) => {
+        if(a.votes < b.votes){
+          return 1;
+        } else {
+          return -1;
+        }
+      })
+    })
+
+    const margin = {top: 20, right: 30, bottom: 40, left: 55},
+        width = 960 - margin.left - margin.right,
+        height = 500 - margin.top - margin.bottom;
+
+    const chart = d3.select(".barchart")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    // x and y are d3 scale objects/functions
+    const x = d3.scaleBand()
+        .rangeRound([0, width])
+        .padding(0.1)
+        .domain(labels);
 
     const y = d3.scaleLinear()
         .range([height, 0])
-        .domain(([0, d3.max(dataPopularDemocratMap)]));
+        .domain(([0, Math.max.apply(null, JSON.stringify(filteredData).match(/\d+/g).map(el => parseInt(el)))]));
 
-    const chart = d3.select(".barchart")
-        .attr("width", width)
-        .attr("height", height);
+    // x axis labels
+    chart.append("g")
+      .attr("class", "axis axis--x")
+      .attr("transform", "translate(0," + height + ")")
+      .call(d3.axisBottom(x));
 
-    const bar = chart.selectAll("g")
-        .data(dataPopularDemocratMap)
-      .enter().append("g")
-        .attr("transform", (d, i) => ("translate(" + i * barWidth + ",0)"));
+    chart.append("text")
+      .attr("transform", "translate(" + (width/2) + " ," + (height + 35) + ")")
+      .style("text-anchor", "middle")
+      .text("State");
 
-    bar.append("rect")
-        .attr("y", (d) => ( y(d) ))
-        .attr("height", (d) => ( height - y(d)) )
-        .attr("width", barWidth - 1);
+    // y axis labels
+    chart.append("g")
+      .attr("class", "axis axis--y")
+      .call(d3.axisLeft(y).ticks(10, "s"));
 
-    bar.append("text")
-        .attr("x", barWidth / 2)
-        .attr("y", (d) => ( y(d) + 3 ))
-        .attr("dy", ".75em")
-        .text((d) => ( d ));
+    chart.append("text")
+      .attr("transform", "rotate(-90) translate(" + (height/-2) + " , 0)")
+      .attr("dy", "-2.35em")
+      .text("Votes");
+
+    // rectangles
+    labels.forEach((state) => {this.populateBars(state, x, y, filteredData[state], chart, height)});
+
+    // Object.keys(filteredData).forEach((type) => {this.populateBars(type, x, y, filteredData[type], chart, height)})
 
   }
 
+  populateBars(state, xScale, yScale, data, chart, height){
+    chart.selectAll("." + state)
+      .data(data)
+    .enter().append("rect")
+      .attr("class", (d) => ("bar " + state + " " + d.party))
+      .attr("x", (d) => (xScale(state)))
+      .attr("y", (d) => (yScale(d.votes)))
+      .attr("height", (d) => (height - yScale(d.votes)))
+      .attr("width", xScale.bandwidth());
+
+
+
+    // chart.selectAll("." + name)
+    //   .data(data)
+    // .enter().append("rect")
+    //   .attr("class", "bar " + name)
+    //   .attr("x", (d) => (xScale(d.state)))
+    //   .attr("y", (d) => (yScale(d.votes)))
+    //   .attr("height", (d) => (height - yScale(d.votes)))
+    //   .attr("width", xScale.bandwidth());
+  }
+
+  componentDidMount(){
+    this.d3Render();
+  }
+
+  componentDidUpdate(){
+    d3.select(".barchart").selectAll("*").remove();
+    this.d3Render();
+  }
+
   render(){
-    return (<svg className="barchart"></svg>)
+    return (<svg className="barchart chart"></svg>)
   }
 }
 

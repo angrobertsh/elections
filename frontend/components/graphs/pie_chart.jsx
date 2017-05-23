@@ -12,7 +12,7 @@ class PieChart extends React.Component{
   }
 
   render(){
-    return (<svg className="piechart"></svg>)
+    return (<svg className="piechart chart"></svg>)
   }
 }
 
