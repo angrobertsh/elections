@@ -6,16 +6,72 @@ class BarChart extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-      filters: this.props.filters,
-      flag: false
+      currentData: {}
     }
     this.d3Render = this.d3Render.bind(this);
     this.populateBars = this.populateBars.bind(this);
+    this.filterData = this.filterData.bind(this);
   }
 
   d3Render(){
-    let filters = this.props.filters;
-    let data = this.props.data;
+    const filteredData = this.filterData();
+    const labels = Object.keys(filteredData);
+
+    if(JSON.stringify(this.state.currentData) != JSON.stringify(filteredData)){
+      this.setState({currentData: filteredData});
+
+      d3.select(".barchart").selectAll("*").remove();
+
+      const margin = {top: 20, right: 30, bottom: 40, left: 55},
+          width = 960 - margin.left - margin.right,
+          height = 500 - margin.top - margin.bottom;
+
+      const chart = d3.select(".barchart")
+          .attr("width", width + margin.left + margin.right)
+          .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+          .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+      // x and y are d3 scale objects/functions
+      const x = d3.scaleBand()
+          .rangeRound([0, width])
+          .padding(0.1)
+          .domain(labels);
+
+      const y = d3.scaleLinear()
+          .range([height, 0])
+          .domain(([0, Math.max.apply(null, JSON.stringify(filteredData).match(/\d+/g).map(el => parseInt(el)))]));
+
+      // x axis labels
+      chart.append("g")
+        .attr("class", "axis axis--x")
+        .attr("transform", "translate(0," + height + ")")
+        .call(d3.axisBottom(x));
+
+      chart.append("text")
+        .attr("transform", "translate(" + (width/2) + " ," + (height + 35) + ")")
+        .style("text-anchor", "middle")
+        .text("State");
+
+      // y axis labels
+      chart.append("g")
+        .attr("class", "axis axis--y")
+        .call(d3.axisLeft(y).ticks(10, "s"));
+
+      chart.append("text")
+        .attr("transform", "rotate(-90) translate(" + (height/-2) + " , 0)")
+        .attr("dy", "-2.35em")
+        .text("Votes");
+
+      // rectangles
+      labels.forEach((state) => {this.populateBars(state, x, y, filteredData[state], chart, height)});
+      // Object.keys(filteredData).forEach((type) => {this.populateBars(type, x, y, filteredData[type], chart, height)})
+    }
+  }
+
+  filterData(){
+    const filters = this.props.filters;
+    const data = this.props.data;
     const labels = Object.keys(data.votes);
     // const dataElectoralDemocratMap = labels.map((state) => ({state: state, votes: data.votes[state].electoral.democrat}));
     // const dataElectoralRepublicanMap = labels.map((state) => ({state: state, votes: data.votes[state].electoral.republican}));
@@ -26,7 +82,6 @@ class BarChart extends React.Component{
     filters.voterParties.forEach((party) => {
       if(data.votes["CA"][filters.voteType][party] > -1){
         labels.forEach((state) => {filteredData[state] = filteredData[state] ? filteredData[state].concat({party: party, votes: data.votes[state][filters.voteType][party]}) : [{party: party, votes: data.votes[state][filters.voteType][party]}]});
-
         // filteredData[party] = labels.map((state) => ({state: state, votes: data.votes[state][filters.voteType][party]}));
       }
     })
@@ -35,52 +90,7 @@ class BarChart extends React.Component{
       filteredData[state] = filteredData[state].sort((a, b) => (a.votes < b.votes ? 1 : - 1))
     })
 
-    const margin = {top: 20, right: 30, bottom: 40, left: 55},
-        width = 960 - margin.left - margin.right,
-        height = 500 - margin.top - margin.bottom;
-
-    const chart = d3.select(".barchart")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-      .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-    // x and y are d3 scale objects/functions
-    const x = d3.scaleBand()
-        .rangeRound([0, width])
-        .padding(0.1)
-        .domain(labels);
-
-    const y = d3.scaleLinear()
-        .range([height, 0])
-        .domain(([0, Math.max.apply(null, JSON.stringify(filteredData).match(/\d+/g).map(el => parseInt(el)))]));
-
-    // x axis labels
-    chart.append("g")
-      .attr("class", "axis axis--x")
-      .attr("transform", "translate(0," + height + ")")
-      .call(d3.axisBottom(x));
-
-    chart.append("text")
-      .attr("transform", "translate(" + (width/2) + " ," + (height + 35) + ")")
-      .style("text-anchor", "middle")
-      .text("State");
-
-    // y axis labels
-    chart.append("g")
-      .attr("class", "axis axis--y")
-      .call(d3.axisLeft(y).ticks(10, "s"));
-
-    chart.append("text")
-      .attr("transform", "rotate(-90) translate(" + (height/-2) + " , 0)")
-      .attr("dy", "-2.35em")
-      .text("Votes");
-
-    // rectangles
-    labels.forEach((state) => {this.populateBars(state, x, y, filteredData[state], chart, height)});
-
-    // Object.keys(filteredData).forEach((type) => {this.populateBars(type, x, y, filteredData[type], chart, height)})
-
+    return filteredData;
   }
 
   populateBars(state, xScale, yScale, data, chart, height){
@@ -111,19 +121,8 @@ class BarChart extends React.Component{
     this.d3Render();
   }
 
-  componentWillReceiveProps(nextProps){
-    console.log(JSON.stringify(nextProps.filters) === JSON.stringify(this.state.filters))
-    if(JSON.stringify(nextProps.filters) != JSON.stringify(this.state.filters)){
-      this.setState({flag: true, filters: nextProps.filters})
-    }
-  }
-
-  componentDidUpdate(prevProps, prevState){
-    if(this.state.flag){
-      d3.select(".barchart").selectAll("*").remove();
-      this.d3Render();
-      this.setState({flag: false});
-    }
+  componentDidUpdate(){
+    this.d3Render();
   }
 
   render(){
