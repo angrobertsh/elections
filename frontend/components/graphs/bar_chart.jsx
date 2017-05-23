@@ -5,6 +5,10 @@ class BarChart extends React.Component{
 
   constructor(props){
     super(props);
+    this.state = {
+      filters: this.props.filters,
+      flag: false
+    }
     this.d3Render = this.d3Render.bind(this);
     this.populateBars = this.populateBars.bind(this);
   }
@@ -28,13 +32,7 @@ class BarChart extends React.Component{
     })
 
     labels.forEach((state) => {
-      filteredData[state] = filteredData[state].sort((a, b) => {
-        if(a.votes < b.votes){
-          return 1;
-        } else {
-          return -1;
-        }
-      })
+      filteredData[state] = filteredData[state].sort((a, b) => (a.votes < b.votes ? 1 : - 1))
     })
 
     const margin = {top: 20, right: 30, bottom: 40, left: 55},
@@ -86,16 +84,18 @@ class BarChart extends React.Component{
   }
 
   populateBars(state, xScale, yScale, data, chart, height){
-    chart.selectAll("." + state)
+    const bars = chart.selectAll("." + state)
       .data(data)
     .enter().append("rect")
       .attr("class", (d) => ("bar " + state + " " + d.party))
       .attr("x", (d) => (xScale(state)))
       .attr("y", (d) => (yScale(d.votes)))
-      .attr("height", (d) => (height - yScale(d.votes)))
-      .attr("width", xScale.bandwidth());
 
-
+    bars.transition()
+      .duration(200)
+      .ease(d3.easeQuad)
+        .attr("height", (d) => (height - yScale(d.votes)))
+        .attr("width", xScale.bandwidth());
 
     // chart.selectAll("." + name)
     //   .data(data)
@@ -111,9 +111,19 @@ class BarChart extends React.Component{
     this.d3Render();
   }
 
-  componentDidUpdate(){
-    d3.select(".barchart").selectAll("*").remove();
-    this.d3Render();
+  componentWillReceiveProps(nextProps){
+    console.log(JSON.stringify(nextProps.filters) === JSON.stringify(this.state.filters))
+    if(JSON.stringify(nextProps.filters) != JSON.stringify(this.state.filters)){
+      this.setState({flag: true, filters: nextProps.filters})
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState){
+    if(this.state.flag){
+      d3.select(".barchart").selectAll("*").remove();
+      this.d3Render();
+      this.setState({flag: false});
+    }
   }
 
   render(){
