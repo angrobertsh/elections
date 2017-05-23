@@ -6,7 +6,8 @@ const defaultState = {
   candidateParties: [],
   states: [],
   voteType: "",
-  graphType: ""
+  graphType: "",
+  currentState: ""
 };
 
 const FilterReducer = (state = defaultState, action) => {

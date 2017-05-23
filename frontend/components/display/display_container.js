@@ -7,6 +7,11 @@ const mapStateToProps = state => ({
   data: state.data
 });
 
+const mapDispatchToProps = dispatch => ({
+  updateFilterStore: (filters) => dispatch(FILTER_ACTIONS.updateFilterStore(filters)),
+});
+
 export default connect(
-  mapStateToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(Display);

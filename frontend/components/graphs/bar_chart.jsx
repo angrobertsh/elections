@@ -100,6 +100,7 @@ class BarChart extends React.Component{
       .attr("class", (d) => ("bar " + state + " " + d.party))
       .attr("x", (d) => (xScale(state)))
       .attr("y", (d) => (yScale(d.votes)))
+      .on("click", () => {this.props.click({currentState: state})});
 
     bars.transition()
       .duration(200)

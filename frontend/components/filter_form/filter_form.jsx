@@ -10,7 +10,8 @@ class FilterForm extends React.Component{
       candidateParties: this.props.candidateParties,
       states: this.props.states,
       voteType: this.props.voteType,
-      graphType: this.props.graphType
+      graphType: this.props.graphType,
+      currentState: ""
     };
     this.update = this.update.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -40,10 +41,6 @@ class FilterForm extends React.Component{
 
   componentWillReceiveProps(nextProps){
     this.setState(nextProps);
-  }
-
-  checkPopular(e){
-    debugger
   }
 
   render() {
