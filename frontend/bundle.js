@@ -28922,7 +28922,8 @@ var Display = function Display(_ref) {
     _react2.default.createElement(
       'div',
       { id: 'graph-area' },
-      _react2.default.createElement(_bar_chart2.default, { data: data[filters.years], filters: filters, click: updateFilterStore })
+      _react2.default.createElement(_bar_chart2.default, { data: data[filters.years], filters: filters, click: updateFilterStore }),
+      _react2.default.createElement(_pie_chart2.default, { data: data[filters.years], filters: filters, currentState: filters.currentState })
     )
   ) : null;
 };
@@ -29462,19 +29463,20 @@ var PieChart = function (_React$Component) {
   _createClass(PieChart, [{
     key: 'filterData',
     value: function filterData() {
-      var parties = ["democrat", "republican", "other"];
-      var filteredData = [];
       var _props = this.props,
           currentState = _props.currentState,
           data = _props.data;
 
+      var filteredData = [];
+      var parties = ["democrat", "republican", "other"];
       if (currentState) {
         data = data.votes[currentState].popular;
-        parties.forEach(function (party) {
+        parties.forEach(function (party, idx) {
           filteredData.push({
             party: party,
             votes: data[party],
-            percent: data[party] / (data["democrat"] + data["republican"] + data["other"])
+            percent: Math.round(100 * (data[party] / (data["democrat"] + data["republican"] + data["other"]))),
+            index: idx
           });
         });
         return filteredData;
@@ -29488,7 +29490,39 @@ var PieChart = function (_React$Component) {
         if (JSON.stringify(filteredData) != JSON.stringify(this.state.currentData)) {
           this.setState({ currentData: filteredData });
 
-          // render it
+          d3.select(".piechart").selectAll("*").remove();
+
+          var chart = d3.select(".piechart"),
+              width = +chart.attr("width"),
+              height = +chart.attr("height"),
+              radius = Math.min(width, height) / 2,
+              g = chart.append("g").attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+          // const color = d3.scaleOrdinal(["steelblue", "red", "yellow"]);
+
+          var pie = d3.pie().sort(null).value(function (d) {
+            return d.percent;
+          });
+
+          var path = d3.arc().outerRadius(radius - 10).innerRadius(0);
+
+          var label = d3.arc().outerRadius(radius - 40).innerRadius(radius - 40);
+
+          // Watch out, this takes a g for some reason
+          var arc = g.selectAll(".arc").data(pie(filteredData)).enter().append("g").attr("class", function (d) {
+            return "arc " + d.data.party;
+          });
+
+          arc.append("path").attr("d", path);
+
+          // this line makes it so you don't have to specify stroke in the arc css for some reason
+          // .attr("fill", (d) => (color(d.data.index)));
+
+          arc.append("text").attr("transform", function (d) {
+            return "translate(" + label.centroid(d) + ")";
+          }).attr("dy", "0.35em").text(function (d) {
+            return d.data.votes + " votes, (" + d.data.percent + "%)";
+          });
         }
       }
     }
@@ -29505,7 +29539,7 @@ var PieChart = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      return _react2.default.createElement('svg', { className: 'piechart chart' });
+      return _react2.default.createElement('svg', { className: 'piechart chart', width: '960', height: '500' });
     }
   }]);
 

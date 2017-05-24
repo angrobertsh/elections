@@ -7,6 +7,7 @@ const Display = ({filters, data, updateFilterStore}) => (
     <div id="display">
       <div id="graph-area">
         <BarChart data={data[filters.years]} filters={filters} click={updateFilterStore} />
+        <PieChart data={data[filters.years]} filters={filters} currentState={filters.currentState} />
       </div>
     </div>
   ) : null

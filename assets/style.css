@@ -31,3 +31,18 @@
 .republican:hover {
   fill: darkred;
 }
+
+.arc {
+  opacity: .8;
+}
+
+.arc text {
+  font: 10px sans-serif;
+  text-anchor: middle;
+  stroke: #000;
+  stroke-width: .6;
+}
+
+.arc path {
+  stroke: #fff;
+}
