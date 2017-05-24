@@ -89,9 +89,17 @@ class PieChart extends React.Component{
           .text((d) => (d.data.votes + " votes, (" + d.data.percent + "%)"));
 
         g.append("text")
-          .attr("transform", "translate(-31 , 10)")
+          .attr("transform", "translate(-27 , 10)")
           .attr("class", "current-state")
-          .text(this.props.currentState)
+          .text(this.props.currentState);
+
+        if(this.props.currentState){
+          g.append("text")
+          .attr("transform", "translate(-26 , 25)")
+          .attr("class", "current-year")
+          .text("(" + this.props.year + ")");
+        }
+
       }
     }
   }

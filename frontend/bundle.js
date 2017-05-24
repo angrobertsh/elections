@@ -28939,7 +28939,7 @@ var Display = function Display(_ref) {
       _react2.default.createElement(
         'div',
         { id: 'smaller-graphs' },
-        _react2.default.createElement(_pie_chart2.default, { data: data[filters.years], voteType: filters.voteType, currentState: filters.currentState }),
+        _react2.default.createElement(_pie_chart2.default, { data: data[filters.years], year: filters.years, voteType: filters.voteType, currentState: filters.currentState }),
         _react2.default.createElement(_line_chart2.default, { data: data, voteType: filters.voteType, voterParties: filters.voterParties, currentState: filters.currentState })
       )
     )
@@ -29032,7 +29032,6 @@ var FilterForm = function (_React$Component) {
       currentState: ""
     };
     _this.update = _this.update.bind(_this);
-    _this.handleSubmit = _this.handleSubmit.bind(_this);
     return _this;
   }
 
@@ -29050,17 +29049,15 @@ var FilterForm = function (_React$Component) {
             var index = newState.indexOf(e.currentTarget.value);
             newState.splice(index, 1);
           }
-          _this2.setState(_defineProperty({}, field, newState));
+          _this2.setState(_defineProperty({}, field, newState), function () {
+            _this2.props.updateFilterStore(_this2.state);
+          });
         } else {
-          _this2.setState(_defineProperty({}, field, e.currentTarget.value));
+          _this2.setState(_defineProperty({}, field, e.currentTarget.value), function () {
+            _this2.props.updateFilterStore(_this2.state);
+          });
         }
       };
-    }
-  }, {
-    key: "handleSubmit",
-    value: function handleSubmit(e) {
-      e.preventDefault();
-      this.props.updateFilterStore(this.state);
     }
   }, {
     key: "componentWillReceiveProps",
@@ -29079,7 +29076,7 @@ var FilterForm = function (_React$Component) {
           } },
         _react2.default.createElement(
           "form",
-          { onSubmit: this.handleSubmit, id: "filter-form" },
+          { id: "filter-form" },
           _react2.default.createElement(
             "div",
             { id: "filter-form-years" },
@@ -29300,11 +29297,6 @@ var FilterForm = function (_React$Component) {
                   "Other"
                 )
               )
-            ),
-            _react2.default.createElement(
-              "button",
-              { className: "submit-button" },
-              "Filter"
             )
           )
         )
@@ -29501,10 +29493,14 @@ var BarChart = function (_React$Component) {
         }
       });
 
+      debugger;
+
       labels.forEach(function (state) {
-        filteredData[state] = filteredData[state].sort(function (a, b) {
-          return a.votes < b.votes ? 1 : -1;
-        });
+        if (filteredData[state]) {
+          filteredData[state] = filteredData[state].sort(function (a, b) {
+            return a.votes < b.votes ? 1 : -1;
+          });
+        }
       });
 
       return filteredData;
@@ -29628,7 +29624,7 @@ var LineChart = function (_React$Component) {
             voterParties.forEach(function (party) {
               if (data[year].votes[currentState][voteType][party] > -1) {
                 filteredData["nums"].push(data[year].votes[currentState][voteType][party]);
-                filteredData["data"][party].push({ votes: data[year].votes[currentState][voteType][party], year: new Date(year + "-01-01") });
+                filteredData["data"][party].push({ votes: data[year].votes[currentState][voteType][party], year: new Date(year + "-02-02"), president: data[year].candidates[party] });
               }
             });
           }
@@ -29670,17 +29666,25 @@ var LineChart = function (_React$Component) {
 
           chart.append("text").attr("transform", "rotate(-90) translate(" + height / -2 + " , 0)").attr("dy", "-2.35em").text("Votes");
 
-          chart.append("text").attr("transform", "translate(" + width / 4 + " , 0)").text("Historical Data");
+          chart.append("text").attr("transform", "translate(" + width / 4 + " , -5)").text("Historical Trends");
 
           Object.keys(data).forEach(function (party) {
-            _this2.drawLines(party);
+            _this2.drawLines(party, data[party], x, y, chart);
           });
         }
       }
     }
   }, {
     key: 'drawLines',
-    value: function drawLines(party) {}
+    value: function drawLines(party, data, xScale, yScale, chart) {
+      var valueline = d3.line().x(function (d) {
+        return xScale(d.year);
+      }).y(function (d) {
+        return yScale(d.votes);
+      });
+
+      chart.append("path").data([data]).attr("class", party + " line").attr("d", valueline);
+    }
   }, {
     key: 'componentDidMount',
     value: function componentDidMount() {
@@ -29824,7 +29828,11 @@ var PieChart = function (_React$Component) {
             return d.data.votes + " votes, (" + d.data.percent + "%)";
           });
 
-          g.append("text").attr("transform", "translate(-31 , 10)").attr("class", "current-state").text(this.props.currentState);
+          g.append("text").attr("transform", "translate(-27 , 10)").attr("class", "current-state").text(this.props.currentState);
+
+          if (this.props.currentState) {
+            g.append("text").attr("transform", "translate(-26 , 25)").attr("class", "current-year").text("(" + this.props.year + ")");
+          }
         }
       }
     }

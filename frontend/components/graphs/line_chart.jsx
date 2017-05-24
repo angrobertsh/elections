@@ -25,7 +25,7 @@ class LineChart extends React.Component{
           voterParties.forEach((party) => {
             if(data[year].votes[currentState][voteType][party] > -1){
               filteredData["nums"].push(data[year].votes[currentState][voteType][party])
-              filteredData["data"][party].push({votes: data[year].votes[currentState][voteType][party], year: new Date(year + "-01-01")})
+              filteredData["data"][party].push({votes: data[year].votes[currentState][voteType][party], year: new Date(year + "-02-02"), president: data[year].candidates[party]})
             }
           });
         }
@@ -81,18 +81,25 @@ class LineChart extends React.Component{
           .text("Votes");
 
         chart.append("text")
-          .attr("transform", "translate(" + (width/4) + " , 0)")
-          .text("Historical Data");
+          .attr("transform", "translate(" + (width/4) + " , -5)")
+          .text("Historical Trends");
 
         Object.keys(data).forEach((party) => {
-          this.drawLines(party);
+          this.drawLines(party, data[party], x, y, chart);
         })
       }
     }
   }
 
-  drawLines(party){
+  drawLines(party, data, xScale, yScale, chart){
+    let valueline = d3.line()
+        .x((d) => ( xScale(d.year) ))
+        .y((d) => ( yScale(d.votes) ));
 
+    chart.append("path")
+        .data([data])
+        .attr("class", party + " line")
+        .attr("d", valueline);
   }
 
   componentDidMount(){

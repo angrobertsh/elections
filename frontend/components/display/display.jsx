@@ -10,7 +10,7 @@ const Display = ({filters, data, updateFilterStore}) => (
       <div id="graph-area">
         <BarChart data={data[filters.years]} voteType={filters.voteType} voterParties={filters.voterParties} click={updateFilterStore} />
         <div id="smaller-graphs">
-          <PieChart data={data[filters.years]} voteType={filters.voteType} currentState={filters.currentState} />
+          <PieChart data={data[filters.years]} year={filters.years} voteType={filters.voteType} currentState={filters.currentState} />
           <LineChart data={data} voteType={filters.voteType} voterParties={filters.voterParties} currentState={filters.currentState} />
         </div>
       </div>

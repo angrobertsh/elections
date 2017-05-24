@@ -11,7 +11,6 @@ class FilterForm extends React.Component{
       currentState: ""
     };
     this.update = this.update.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   update(field){
@@ -24,17 +23,12 @@ class FilterForm extends React.Component{
           let index = newState.indexOf(e.currentTarget.value);
           newState.splice(index, 1);
         }
-        this.setState({[field]: newState});
+        this.setState({[field]: newState}, () => {this.props.updateFilterStore(this.state)});
       } else {
-        this.setState({[field]: e.currentTarget.value})
+        this.setState({[field]: e.currentTarget.value}, () => {this.props.updateFilterStore(this.state)});
       }
 	  }
   }
-
-  handleSubmit(e){
-		e.preventDefault();
-    this.props.updateFilterStore(this.state);
-	}
 
   componentWillReceiveProps(nextProps){
     this.setState(nextProps);
@@ -43,7 +37,7 @@ class FilterForm extends React.Component{
   render() {
     return (
       <div id="filter-form-container" ref={ filterForm => this.filterForm = filterForm }>
-        <form onSubmit={this.handleSubmit} id="filter-form">
+        <form id="filter-form">
           <div id="filter-form-years">
             <label><input type="radio" onChange={this.update("years")} value="2012" checked={this.state.years === "2012"} />2012</label>
             <label><input type="radio" onChange={this.update("years")} value="2008" checked={this.state.years === "2008"} />2008</label>
@@ -88,7 +82,6 @@ class FilterForm extends React.Component{
                 <label><input type="checkbox" onChange={this.update("voterParties")} value="other" checked={this.state.voterParties.includes("other")} />Other</label>
               </div>
             </div>
-            <button className="submit-button">Filter</button>
           </div>
         </form>
       </div>

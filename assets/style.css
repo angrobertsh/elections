@@ -67,13 +67,11 @@ table {
 
 #graph-area{
 	display: flex;
-	justify-content: center;
 }
 
 #smaller-graphs{
 	display: flex;
 	flex-direction: column;
-	align-items: center;
 }
 
 /*Form*/
@@ -90,7 +88,6 @@ table {
 
 #filter-form-filters {
 	display: flex;
-	justify-content: space-around;
 }
 
 /*d3*/
@@ -107,26 +104,32 @@ table {
 
 .democrat {
   fill: steelblue;
+	stroke: steelblue;
 }
 
 .democrat:hover {
   fill: blue;
+  stroke: blue;
 }
 
 .other {
   fill: yellow;
+  stroke: yellow;
 }
 
 .other:hover {
   fill: green;
+  stroke: green;
 }
 
 .republican {
   fill: red;
+  stroke: red;
 }
 
 .republican:hover {
   fill: darkred;
+  stroke: darkred;
 }
 
 .arc {
@@ -147,5 +150,21 @@ table {
 
 .current-state {
   font: 40px sans-serif;
-  stroke-width: 1;
+}
+
+.current-year{
+	font: 18px sans-serif;
+	font-weight: bold;
+}
+
+.line {
+	transition: all .5s;
+	opacity: .8;
+	fill: none;
+	stroke-width: 3px;
+}
+
+.line:hover {
+	fill: none;
+	stroke-width: 4px;
 }
