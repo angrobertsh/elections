@@ -71,14 +71,14 @@ table {
 	opacity: .8;
 }
 
-#splash-title{
+.splash-title{
 	font-size: 80px;
 	font-weight: bolder;
 	color: black;
 	text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
 }
 
-#splash-eagle{
+.splash-eagle{
 	display: block;
 	height: 200px;
 	width: 200px;
@@ -107,15 +107,31 @@ table {
 }
 
 .fadeInOut {
-	-webkit-animation: fades 1.5s; /* Safari 4.0 - 8.0 */
-	animation: fades 1.5s;
+	-webkit-animation: fadesInOut 1.5s; /* Safari 4.0 - 8.0 */
+	animation: fadesInOut 1.5s;
 }
 
-@keyframes fades {
+.fadeIn {
+	-webkit-animation: fadesIn 1.25s ease-in; /* Safari 4.0 - 8.0 */
+	animation: fadesIn 1.25s ease-in;
+}
+
+.fadeInFaster {
+	-webkit-animation: fadesIn .5s ease; /* Safari 4.0 - 8.0 */
+	animation: fadesIn .5s ease;
+}
+
+@keyframes fadesInOut {
     0%   {opacity: 0; z-index: 2;}
     50%  {opacity: 1; z-index: 2;}
     100% {opacity: 0; z-index: 2;}
 }
+
+@keyframes fadesIn {
+    0%   {opacity: 0;}
+    100% {opacity: 1;}
+}
+
 
 /*Display*/
 

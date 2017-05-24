@@ -12,35 +12,15 @@ const handleClick = (e) => {
   }, 1500);
 }
 
-// const Splash = () => (
-//   <div id="splash" onClick={handleClick}>
-//     FFFFFFUUUUUUUUUUCCCCCCCK YEAHHHHHHh
-//   </div>
-// )
-
-
-class Splash extends React.Component{
-  constructor(props){
-    super(props);
-  }
-
-  ComponentDidMount(){
-
-  }
-
-  render(){
-    return (
-      <div>
-        <div id="splash-background">
-        </div>
-        <div id="splash" onClick={handleClick}>
-          <div id="splash-title">{"'MURICA"}</div>
-          <div id="splash-eagle"></div>
-        </div>
-      </div>
-    );
-  }
-
-}
+const Splash = () => (
+  <div>
+    <div id="splash-background">
+    </div>
+    <div id="splash" onClick={handleClick}>
+      <div className="splash-title fadeIn">{"'MURICA"}</div>
+      <div className="splash-eagle fadeInFaster"></div>
+    </div>
+  </div>
+)
 
 export default Splash;

@@ -29,7 +29,9 @@ const FilterReducer = (state = defaultState, action) => {
 const toggleParty = (initialArray, addParty) => {
   if(initialArray.includes(addParty)){
     let idx = initialArray.indexOf(addParty);
-    initialArray.splice(idx, 1);
+    if(initialArray.length != 1){
+      initialArray.splice(idx, 1);
+    }
   } else {
     initialArray.push(addParty)
   }
