@@ -79,6 +79,7 @@ class PieChart extends React.Component{
 
         arc.append("path")
           .attr("d", path)
+          .on("click", (d) => {this.props.click(d.data.party)});
 
           // this line makes it so you don't have to specify stroke in the arc css for some reason
           // .attr("fill", (d) => (color(d.data.index)));

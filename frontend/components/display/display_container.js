@@ -9,6 +9,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   updateFilterStore: (filters) => dispatch(FILTER_ACTIONS.updateFilterStore(filters)),
+  toggleParties: (party) => dispatch(FILTER_ACTIONS.toggleParties(party))
 });
 
 export default connect(
