@@ -6,7 +6,7 @@ import results from 'presidential-election-data';
 
 document.addEventListener("DOMContentLoaded", () => {
   const root = document.getElementById("root");
-  const store = configureStore({data: results});
+  const store = configureStore({data: results, filters: {voterParties: ["democrat", "republican", "other"], voteType: "popular", years: "2012", currentState: "CA"}});
   window.store = store;
 
   ReactDOM.render(<Root store={store} />, root);

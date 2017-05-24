@@ -10,38 +10,89 @@ class LineChart extends React.Component{
     }
     this.d3Render = this.d3Render.bind(this);
     this.filterData = this.filterData.bind(this);
+    this.drawLines = this.drawLines.bind(this);
   }
 
   filterData(){
     let { currentState, data, voteType, voterParties } = this.props;
-    let filteredData = {};
+    let filteredData = {data: {}, years: [], nums: []};
     let years = Object.keys(data);
     if(currentState){
-      voterParties.forEach((party) => {filteredData[party] = []});
+      voterParties.forEach((party) => {filteredData["data"][party] = []});
       years.forEach((year) => {
         if(data[year].votes[currentState][voteType]){
+          filteredData["years"].push(new Date(year + "-02-02"));
           voterParties.forEach((party) => {
             if(data[year].votes[currentState][voteType][party] > -1){
-              filteredData[party].push(data[year].votes[currentState][voteType][party])
+              filteredData["nums"].push(data[year].votes[currentState][voteType][party])
+              filteredData["data"][party].push({votes: data[year].votes[currentState][voteType][party], year: new Date(year + "-01-01")})
             }
           });
         }
       });
     }
-    console.log(filteredData);
     return filteredData;
   }
 
   d3Render(){
-    const filteredData = this.filterData();
-    if(filteredData){
-      if(JSON.stringify(filteredData) != JSON.stringify(this.state.currentData)){
-        this.setState({currentData: filteredData});
+    const { data, years, nums } = this.filterData();
+    if(data){
+      if(JSON.stringify(data) != JSON.stringify(this.state.currentData)){
+        this.setState({currentData: data});
 
         d3.select(".linechart").selectAll("*").remove();
 
+        const margin = {top: 20, right: 0, bottom: 40, left: 55},
+            width = 250 - margin.left - margin.right,
+            height = 250 - margin.top - margin.bottom;
+
+        const chart = d3.select(".linechart")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+          .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+        const x = d3.scaleTime()
+            .range([0, width])
+            .domain([years[0], years[years.length-1]]);
+
+        const y = d3.scaleLinear()
+            .range([height, 0])
+            .domain([0, Math.max.apply(null, nums)]);
+
+        chart.append("g")
+          .attr("class", "axis axis--x")
+          .attr("transform", "translate(0," + height + ")")
+          .call(d3.axisBottom(x)
+                .ticks(5));
+
+        chart.append("text")
+          .attr("transform", "translate(" + (width/2) + " ," + (height + 35) + ")")
+          .style("text-anchor", "middle")
+          .text("Years");
+
+        chart.append("g")
+          .attr("class", "axis axis--y")
+          .call(d3.axisLeft(y).ticks(10, "s"));
+
+        chart.append("text")
+          .attr("transform", "rotate(-90) translate(" + (height/-2) + " , 0)")
+          .attr("dy", "-2.35em")
+          .text("Votes");
+
+        chart.append("text")
+          .attr("transform", "translate(" + (width/4) + " , 0)")
+          .text("Historical Data");
+
+        Object.keys(data).forEach((party) => {
+          this.drawLines(party);
+        })
       }
     }
+  }
+
+  drawLines(party){
+
   }
 
   componentDidMount(){
@@ -53,7 +104,7 @@ class LineChart extends React.Component{
   }
 
   render(){
-    return (<svg className="linechart chart" width="280" height="250"></svg>)
+    return (<svg className="linechart chart"></svg>)
   }
 }
 

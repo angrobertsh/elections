@@ -7,10 +7,7 @@ class FilterForm extends React.Component{
     this.state = {
       years: this.props.years,
       voterParties: this.props.voterParties,
-      candidateParties: this.props.candidateParties,
-      states: this.props.states,
       voteType: this.props.voteType,
-      graphType: this.props.graphType,
       currentState: ""
     };
     this.update = this.update.bind(this);

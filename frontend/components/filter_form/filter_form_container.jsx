@@ -5,10 +5,7 @@ import * as FILTER_ACTIONS from '../../actions/filter_actions';
 const mapStateToProps = state => ({
   years: state.filters.years,
   voterParties: state.filters.voterParties,
-  candidateParties: state.filters.candidateParties,
-  states: state.filters.states,
   voteType: state.filters.voteType,
-  graphType: state.filters.graphType
 });
 
 const mapDispatchToProps = dispatch => ({

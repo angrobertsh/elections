@@ -6,7 +6,7 @@ import LineChart from '../graphs/line_chart';
 const Display = ({filters, data, updateFilterStore}) => (
   data[filters.years] ? (
     <div id="display">
-      <div id="year-label">{filters.years}</div>
+      <div id="year-label">{filters.years} - {data[filters.years].candidates.democrat} vs. {data[filters.years].candidates.republican}</div>
       <div id="graph-area">
         <BarChart data={data[filters.years]} voteType={filters.voteType} voterParties={filters.voterParties} click={updateFilterStore} />
         <div id="smaller-graphs">
