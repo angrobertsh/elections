@@ -1,3 +1,100 @@
+/*Reset*/
+
+/* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/*Display*/
+
+#display{
+	padding: 30px 0 20px 0;
+	display: flex;
+	flex-direction: column;
+}
+
+#year-label{
+	font: sans-serif;
+	font-size: 3rem;
+	font-weight: bolder;
+	display: flex;
+	justify-content: center;
+}
+
+#graph-area{
+	display: flex;
+	justify-content: center;
+}
+
+#smaller-graphs{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+/*Form*/
+
+#filter-form-years {
+	float: left;
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	align-items: center;
+	padding: 0 10px 0 10px;
+}
+
+#filter-form-filters {
+	display: flex;
+	justify-content: space-around;
+}
+
+/*d3*/
+
 .axis text {
   stroke: #000;
   stroke-width: .25;
@@ -33,6 +130,7 @@
 }
 
 .arc {
+  transition: all .5s;
   opacity: .8;
 }
 
@@ -45,4 +143,9 @@
 
 .arc path {
   stroke: #fff;
+}
+
+.current-state {
+  font: 40px sans-serif;
+  stroke-width: 1;
 }

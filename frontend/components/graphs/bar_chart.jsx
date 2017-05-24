@@ -22,7 +22,7 @@ class BarChart extends React.Component{
 
       d3.select(".barchart").selectAll("*").remove();
 
-      const margin = {top: 20, right: 30, bottom: 40, left: 55},
+      const margin = {top: 20, right: 0, bottom: 40, left: 55},
           width = 960 - margin.left - margin.right,
           height = 500 - margin.top - margin.bottom;
 
@@ -42,22 +42,24 @@ class BarChart extends React.Component{
           .range([height, 0])
           .domain(([0, Math.max.apply(null, JSON.stringify(filteredData).match(/\d+/g).map(el => parseInt(el)))]));
 
-      // x axis labels
+      // x axis ticks
       chart.append("g")
         .attr("class", "axis axis--x")
         .attr("transform", "translate(0," + height + ")")
         .call(d3.axisBottom(x));
 
+      // x axis labels
       chart.append("text")
         .attr("transform", "translate(" + (width/2) + " ," + (height + 35) + ")")
         .style("text-anchor", "middle")
         .text("State");
 
-      // y axis labels
+      // y axis ticks
       chart.append("g")
         .attr("class", "axis axis--y")
         .call(d3.axisLeft(y).ticks(10, "s"));
 
+      // y axis labels
       chart.append("text")
         .attr("transform", "rotate(-90) translate(" + (height/-2) + " , 0)")
         .attr("dy", "-2.35em")
@@ -70,8 +72,7 @@ class BarChart extends React.Component{
   }
 
   filterData(){
-    const filters = this.props.filters;
-    const data = this.props.data;
+    const { data, voteType, voterParties } = this.props;
     const labels = Object.keys(data.votes);
     // const dataElectoralDemocratMap = labels.map((state) => ({state: state, votes: data.votes[state].electoral.democrat}));
     // const dataElectoralRepublicanMap = labels.map((state) => ({state: state, votes: data.votes[state].electoral.republican}));
@@ -79,10 +80,10 @@ class BarChart extends React.Component{
     // const dataPopularRepublicanMap = labels.map((state) => ({state: state, votes: data.votes[state].popular.republican}));
     // const dataPopularOtherMap = labels.map((state) => ({state: state, votes: data.votes[state].popular.other}));
     let filteredData = {};
-    filters.voterParties.forEach((party) => {
-      if(data.votes["CA"][filters.voteType][party] > -1){
-        labels.forEach((state) => {filteredData[state] = filteredData[state] ? filteredData[state].concat({party: party, votes: data.votes[state][filters.voteType][party]}) : [{party: party, votes: data.votes[state][filters.voteType][party]}]});
-        // filteredData[party] = labels.map((state) => ({state: state, votes: data.votes[state][filters.voteType][party]}));
+    voterParties.forEach((party) => {
+      if(data.votes["CA"][voteType][party] > -1){
+        labels.forEach((state) => {filteredData[state] = filteredData[state] ? filteredData[state].concat({party: party, votes: data.votes[state][voteType][party]}) : [{party: party, votes: data.votes[state][voteType][party]}]});
+        // filteredData[party] = labels.map((state) => ({state: state, votes: data.votes[state][voteType][party]}));
       }
     })
 
@@ -127,7 +128,9 @@ class BarChart extends React.Component{
   }
 
   render(){
-    return (<svg className="barchart chart"></svg>)
+    return (
+      <svg className="barchart chart"></svg>
+    )
   }
 }
 

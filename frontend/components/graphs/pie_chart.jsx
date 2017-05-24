@@ -13,23 +13,33 @@ class PieChart extends React.Component{
   }
 
   filterData(){
-    let { currentState, data } = this.props;
+    let { currentState, data, voteType } = this.props;
     let filteredData = [];
-    const parties = ["democrat", "republican", "other"];
-    if(currentState){
-      data = data.votes[currentState].popular;
-      parties.forEach((party, idx) => {
-        filteredData.push(
-          {
-            party: party,
-            votes: data[party],
-            percent: Math.round(100*(data[party]/(data["democrat"] + data["republican"] + data["other"]))),
-            index: idx
-          }
-        )
-      });
-      return filteredData;
+    let parties = ["democrat", "republican"];
+    let currentTotal;
+    if(voteType === "popular"){
+      parties.push("other");
     }
+    if(currentState){
+      if(data.votes[currentState][voteType]){
+        data = data.votes[currentState][voteType];
+        currentTotal = data["democrat"] + data["republican"];
+        if(voteType === "popular"){
+          currentTotal += data["other"];
+        }
+        parties.forEach((party, idx) => {
+          filteredData.push(
+            {
+              party: party,
+              votes: data[party],
+              percent: Math.round(100*(data[party]/currentTotal)),
+              // index: idx
+            }
+          )
+        });
+      }
+    }
+    return filteredData;
   }
 
   d3Render(){
@@ -78,6 +88,10 @@ class PieChart extends React.Component{
           .attr("dy", "0.35em")
           .text((d) => (d.data.votes + " votes, (" + d.data.percent + "%)"));
 
+        g.append("text")
+          .attr("transform", "translate(-31 , 10)")
+          .attr("class", "current-state")
+          .text(this.props.currentState)
       }
     }
   }
@@ -91,7 +105,7 @@ class PieChart extends React.Component{
   }
 
   render(){
-    return (<svg className="piechart chart" width="960" height="500"></svg>)
+    return (<svg className="piechart chart" width="280" height="250"></svg>)
   }
 }
 

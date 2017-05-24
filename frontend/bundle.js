@@ -28910,6 +28910,10 @@ var _pie_chart = __webpack_require__(138);
 
 var _pie_chart2 = _interopRequireDefault(_pie_chart);
 
+var _line_chart = __webpack_require__(365);
+
+var _line_chart2 = _interopRequireDefault(_line_chart);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Display = function Display(_ref) {
@@ -28921,9 +28925,19 @@ var Display = function Display(_ref) {
     { id: 'display' },
     _react2.default.createElement(
       'div',
+      { id: 'year-label' },
+      filters.years
+    ),
+    _react2.default.createElement(
+      'div',
       { id: 'graph-area' },
-      _react2.default.createElement(_bar_chart2.default, { data: data[filters.years], filters: filters, click: updateFilterStore }),
-      _react2.default.createElement(_pie_chart2.default, { data: data[filters.years], filters: filters, currentState: filters.currentState })
+      _react2.default.createElement(_bar_chart2.default, { data: data[filters.years], voteType: filters.voteType, voterParties: filters.voterParties, click: updateFilterStore }),
+      _react2.default.createElement(
+        'div',
+        { id: 'smaller-graphs' },
+        _react2.default.createElement(_pie_chart2.default, { data: data[filters.years], voteType: filters.voteType, currentState: filters.currentState }),
+        _react2.default.createElement(_line_chart2.default, { data: data, voteType: filters.voteType, voterParties: filters.voterParties, currentState: filters.currentState })
+      )
     )
   ) : null;
 };
@@ -29059,7 +29073,7 @@ var FilterForm = function (_React$Component) {
 
       return _react2.default.createElement(
         "div",
-        { className: "filter-form-container", ref: function ref(filterForm) {
+        { id: "filter-form-container", ref: function ref(filterForm) {
             return _this3.filterForm = filterForm;
           } },
         _react2.default.createElement(
@@ -29069,99 +29083,228 @@ var FilterForm = function (_React$Component) {
             "div",
             { id: "filter-form-years" },
             _react2.default.createElement(
-              "header",
-              { className: "filter-form-years" },
-              "What years would you like to see?"
+              "label",
+              null,
+              _react2.default.createElement("input", { type: "radio", onChange: this.update("years"), value: "2012", checked: this.state.years === "2012" }),
+              "2012"
             ),
-            _react2.default.createElement("input", { type: "radio", onChange: this.update("years"), value: "1900", disabled: this.state.voteType === "popular", checked: this.state.years === "1900" }),
-            "1900",
-            _react2.default.createElement("input", { type: "radio", onChange: this.update("years"), value: "1904", disabled: this.state.voteType === "popular", checked: this.state.years === "1904" }),
-            "1904",
-            _react2.default.createElement("input", { type: "radio", onChange: this.update("years"), value: "1908", disabled: this.state.voteType === "popular", checked: this.state.years === "1908" }),
-            "1908",
-            _react2.default.createElement("input", { type: "radio", onChange: this.update("years"), value: "1912", disabled: this.state.voteType === "popular", checked: this.state.years === "1912" }),
-            "1912",
-            _react2.default.createElement("input", { type: "radio", onChange: this.update("years"), value: "1916", disabled: this.state.voteType === "popular", checked: this.state.years === "1916" }),
-            "1916",
-            _react2.default.createElement("input", { type: "radio", onChange: this.update("years"), value: "1920", disabled: this.state.voteType === "popular", checked: this.state.years === "1920" }),
-            "1920",
-            _react2.default.createElement("input", { type: "radio", onChange: this.update("years"), value: "1924", disabled: this.state.voteType === "popular", checked: this.state.years === "1924" }),
-            "1924",
-            _react2.default.createElement("input", { type: "radio", onChange: this.update("years"), value: "1928", disabled: this.state.voteType === "popular", checked: this.state.years === "1928" }),
-            "1928",
-            _react2.default.createElement("input", { type: "radio", onChange: this.update("years"), value: "1932", disabled: this.state.voteType === "popular", checked: this.state.years === "1932" }),
-            "1932",
-            _react2.default.createElement("input", { type: "radio", onChange: this.update("years"), value: "1936", disabled: this.state.voteType === "popular", checked: this.state.years === "1936" }),
-            "1936",
-            _react2.default.createElement("input", { type: "radio", onChange: this.update("years"), value: "1940", disabled: this.state.voteType === "popular", checked: this.state.years === "1940" }),
-            "1940",
-            _react2.default.createElement("input", { type: "radio", onChange: this.update("years"), value: "1944", disabled: this.state.voteType === "popular", checked: this.state.years === "1944" }),
-            "1944",
-            _react2.default.createElement("input", { type: "radio", onChange: this.update("years"), value: "1948", disabled: this.state.voteType === "popular", checked: this.state.years === "1948" }),
-            "1948",
-            _react2.default.createElement("input", { type: "radio", onChange: this.update("years"), value: "1952", disabled: this.state.voteType === "popular", checked: this.state.years === "1952" }),
-            "1952",
-            _react2.default.createElement("input", { type: "radio", onChange: this.update("years"), value: "1956", disabled: this.state.voteType === "popular", checked: this.state.years === "1956" }),
-            "1956",
-            _react2.default.createElement("input", { type: "radio", onChange: this.update("years"), value: "1960", disabled: this.state.voteType === "popular", checked: this.state.years === "1960" }),
-            "1960",
-            _react2.default.createElement("input", { type: "radio", onChange: this.update("years"), value: "1964", disabled: this.state.voteType === "popular", checked: this.state.years === "1964" }),
-            "1964",
-            _react2.default.createElement("input", { type: "radio", onChange: this.update("years"), value: "1968", disabled: this.state.voteType === "popular", checked: this.state.years === "1968" }),
-            "1968",
-            _react2.default.createElement("input", { type: "radio", onChange: this.update("years"), value: "1972", disabled: this.state.voteType === "popular", checked: this.state.years === "1972" }),
-            "1972",
-            _react2.default.createElement("input", { type: "radio", onChange: this.update("years"), value: "1976", disabled: this.state.voteType === "popular", checked: this.state.years === "1976" }),
-            "1976",
-            _react2.default.createElement("input", { type: "radio", onChange: this.update("years"), value: "1980", disabled: this.state.voteType === "popular", checked: this.state.years === "1980" }),
-            "1980",
-            _react2.default.createElement("input", { type: "radio", onChange: this.update("years"), value: "1984", disabled: this.state.voteType === "popular", checked: this.state.years === "1984" }),
-            "1984",
-            _react2.default.createElement("input", { type: "radio", onChange: this.update("years"), value: "1992", checked: this.state.years === "1992" }),
-            "1992",
-            _react2.default.createElement("input", { type: "radio", onChange: this.update("years"), value: "1996", checked: this.state.years === "1996" }),
-            "1996",
-            _react2.default.createElement("input", { type: "radio", onChange: this.update("years"), value: "2000", checked: this.state.years === "2000" }),
-            "2000",
-            _react2.default.createElement("input", { type: "radio", onChange: this.update("years"), value: "2004", checked: this.state.years === "2004" }),
-            "2004",
-            _react2.default.createElement("input", { type: "radio", onChange: this.update("years"), value: "2008", checked: this.state.years === "2008" }),
-            "2008",
-            _react2.default.createElement("input", { type: "radio", onChange: this.update("years"), value: "2012", checked: this.state.years === "2012" }),
-            "2012"
+            _react2.default.createElement(
+              "label",
+              null,
+              _react2.default.createElement("input", { type: "radio", onChange: this.update("years"), value: "2008", checked: this.state.years === "2008" }),
+              "2008"
+            ),
+            _react2.default.createElement(
+              "label",
+              null,
+              _react2.default.createElement("input", { type: "radio", onChange: this.update("years"), value: "2004", checked: this.state.years === "2004" }),
+              "2004"
+            ),
+            _react2.default.createElement(
+              "label",
+              null,
+              _react2.default.createElement("input", { type: "radio", onChange: this.update("years"), value: "2000", checked: this.state.years === "2000" }),
+              "2000"
+            ),
+            _react2.default.createElement(
+              "label",
+              null,
+              _react2.default.createElement("input", { type: "radio", onChange: this.update("years"), value: "1996", checked: this.state.years === "1996" }),
+              "1996"
+            ),
+            _react2.default.createElement(
+              "label",
+              null,
+              _react2.default.createElement("input", { type: "radio", onChange: this.update("years"), value: "1992", checked: this.state.years === "1992" }),
+              "1992"
+            ),
+            _react2.default.createElement(
+              "label",
+              null,
+              _react2.default.createElement("input", { type: "radio", onChange: this.update("years"), value: "1984", disabled: this.state.voteType === "popular", checked: this.state.years === "1984" }),
+              "1984"
+            ),
+            _react2.default.createElement(
+              "label",
+              null,
+              _react2.default.createElement("input", { type: "radio", onChange: this.update("years"), value: "1980", disabled: this.state.voteType === "popular", checked: this.state.years === "1980" }),
+              "1980"
+            ),
+            _react2.default.createElement(
+              "label",
+              null,
+              _react2.default.createElement("input", { type: "radio", onChange: this.update("years"), value: "1976", disabled: this.state.voteType === "popular", checked: this.state.years === "1976" }),
+              "1976"
+            ),
+            _react2.default.createElement(
+              "label",
+              null,
+              _react2.default.createElement("input", { type: "radio", onChange: this.update("years"), value: "1972", disabled: this.state.voteType === "popular", checked: this.state.years === "1972" }),
+              "1972"
+            ),
+            _react2.default.createElement(
+              "label",
+              null,
+              _react2.default.createElement("input", { type: "radio", onChange: this.update("years"), value: "1968", disabled: this.state.voteType === "popular", checked: this.state.years === "1968" }),
+              "1968"
+            ),
+            _react2.default.createElement(
+              "label",
+              null,
+              _react2.default.createElement("input", { type: "radio", onChange: this.update("years"), value: "1964", disabled: this.state.voteType === "popular", checked: this.state.years === "1964" }),
+              "1964"
+            ),
+            _react2.default.createElement(
+              "label",
+              null,
+              _react2.default.createElement("input", { type: "radio", onChange: this.update("years"), value: "1960", disabled: this.state.voteType === "popular", checked: this.state.years === "1960" }),
+              "1960"
+            ),
+            _react2.default.createElement(
+              "label",
+              null,
+              _react2.default.createElement("input", { type: "radio", onChange: this.update("years"), value: "1956", disabled: this.state.voteType === "popular", checked: this.state.years === "1956" }),
+              "1956"
+            ),
+            _react2.default.createElement(
+              "label",
+              null,
+              _react2.default.createElement("input", { type: "radio", onChange: this.update("years"), value: "1952", disabled: this.state.voteType === "popular", checked: this.state.years === "1952" }),
+              "1952"
+            ),
+            _react2.default.createElement(
+              "label",
+              null,
+              _react2.default.createElement("input", { type: "radio", onChange: this.update("years"), value: "1948", disabled: this.state.voteType === "popular", checked: this.state.years === "1948" }),
+              "1948"
+            ),
+            _react2.default.createElement(
+              "label",
+              null,
+              _react2.default.createElement("input", { type: "radio", onChange: this.update("years"), value: "1944", disabled: this.state.voteType === "popular", checked: this.state.years === "1944" }),
+              "1944"
+            ),
+            _react2.default.createElement(
+              "label",
+              null,
+              _react2.default.createElement("input", { type: "radio", onChange: this.update("years"), value: "1940", disabled: this.state.voteType === "popular", checked: this.state.years === "1940" }),
+              "1940"
+            ),
+            _react2.default.createElement(
+              "label",
+              null,
+              _react2.default.createElement("input", { type: "radio", onChange: this.update("years"), value: "1936", disabled: this.state.voteType === "popular", checked: this.state.years === "1936" }),
+              "1936"
+            ),
+            _react2.default.createElement(
+              "label",
+              null,
+              _react2.default.createElement("input", { type: "radio", onChange: this.update("years"), value: "1932", disabled: this.state.voteType === "popular", checked: this.state.years === "1932" }),
+              "1932"
+            ),
+            _react2.default.createElement(
+              "label",
+              null,
+              _react2.default.createElement("input", { type: "radio", onChange: this.update("years"), value: "1928", disabled: this.state.voteType === "popular", checked: this.state.years === "1928" }),
+              "1928"
+            ),
+            _react2.default.createElement(
+              "label",
+              null,
+              _react2.default.createElement("input", { type: "radio", onChange: this.update("years"), value: "1924", disabled: this.state.voteType === "popular", checked: this.state.years === "1924" }),
+              "1924"
+            ),
+            _react2.default.createElement(
+              "label",
+              null,
+              _react2.default.createElement("input", { type: "radio", onChange: this.update("years"), value: "1920", disabled: this.state.voteType === "popular", checked: this.state.years === "1920" }),
+              "1920"
+            ),
+            _react2.default.createElement(
+              "label",
+              null,
+              _react2.default.createElement("input", { type: "radio", onChange: this.update("years"), value: "1916", disabled: this.state.voteType === "popular", checked: this.state.years === "1916" }),
+              "1916"
+            ),
+            _react2.default.createElement(
+              "label",
+              null,
+              _react2.default.createElement("input", { type: "radio", onChange: this.update("years"), value: "1912", disabled: this.state.voteType === "popular", checked: this.state.years === "1912" }),
+              "1912"
+            ),
+            _react2.default.createElement(
+              "label",
+              null,
+              _react2.default.createElement("input", { type: "radio", onChange: this.update("years"), value: "1908", disabled: this.state.voteType === "popular", checked: this.state.years === "1908" }),
+              "1908"
+            ),
+            _react2.default.createElement(
+              "label",
+              null,
+              _react2.default.createElement("input", { type: "radio", onChange: this.update("years"), value: "1904", disabled: this.state.voteType === "popular", checked: this.state.years === "1904" }),
+              "1904"
+            ),
+            _react2.default.createElement(
+              "label",
+              null,
+              _react2.default.createElement("input", { type: "radio", onChange: this.update("years"), value: "1900", disabled: this.state.voteType === "popular", checked: this.state.years === "1900" }),
+              "1900"
+            )
           ),
           _react2.default.createElement(
             "div",
-            { id: "filter-form-vote-type" },
+            { id: "filter-form-filters" },
             _react2.default.createElement(
-              "header",
-              { className: "filter-form-voteType" },
-              "What type of votes would you like to see?"
+              "div",
+              { id: "filter-form-vote-type" },
+              _react2.default.createElement(
+                "div",
+                { className: "filter-form-inputs" },
+                _react2.default.createElement(
+                  "label",
+                  null,
+                  _react2.default.createElement("input", { type: "radio", onChange: this.update("voteType"), value: "popular", disabled: parseInt(this.state.years) < 1990, checked: this.state.voteType === "popular" }),
+                  "Popular"
+                ),
+                _react2.default.createElement(
+                  "label",
+                  null,
+                  _react2.default.createElement("input", { type: "radio", onChange: this.update("voteType"), value: "electoral", checked: this.state.voteType === "electoral" }),
+                  "Electoral"
+                )
+              )
             ),
-            _react2.default.createElement("input", { type: "radio", onChange: this.update("voteType"), value: "electoral", checked: this.state.voteType === "electoral" }),
-            "Electoral votes",
-            _react2.default.createElement("input", { type: "radio", onChange: this.update("voteType"), value: "popular", disabled: parseInt(this.state.years) < 1990, checked: this.state.voteType === "popular" }),
-            "Popular votes"
-          ),
-          _react2.default.createElement(
-            "div",
-            { id: "filter-form-parties" },
             _react2.default.createElement(
-              "header",
-              { className: "filter-form-parties" },
-              "What votes would you like to see?"
+              "div",
+              { id: "filter-form-parties" },
+              _react2.default.createElement(
+                "div",
+                { className: "filter-form-inputs" },
+                _react2.default.createElement(
+                  "label",
+                  null,
+                  _react2.default.createElement("input", { type: "checkbox", onChange: this.update("voterParties"), value: "democrat", checked: this.state.voterParties.includes("democrat") }),
+                  "Democrat"
+                ),
+                _react2.default.createElement(
+                  "label",
+                  null,
+                  _react2.default.createElement("input", { type: "checkbox", onChange: this.update("voterParties"), value: "republican", checked: this.state.voterParties.includes("republican") }),
+                  "Republican"
+                ),
+                _react2.default.createElement(
+                  "label",
+                  null,
+                  _react2.default.createElement("input", { type: "checkbox", onChange: this.update("voterParties"), value: "other", checked: this.state.voterParties.includes("other") }),
+                  "Other"
+                )
+              )
             ),
-            _react2.default.createElement("input", { type: "checkbox", onChange: this.update("voterParties"), value: "democrat", checked: this.state.voterParties.includes("democrat") }),
-            "Democrat votes",
-            _react2.default.createElement("input", { type: "checkbox", onChange: this.update("voterParties"), value: "republican", checked: this.state.voterParties.includes("republican") }),
-            "Republican votes",
-            _react2.default.createElement("input", { type: "checkbox", onChange: this.update("voterParties"), value: "other", checked: this.state.voterParties.includes("other") }),
-            "Other votes"
-          ),
-          _react2.default.createElement(
-            "button",
-            { className: "submit-button" },
-            "Filter"
+            _react2.default.createElement(
+              "button",
+              { className: "submit-button" },
+              "Filter"
+            )
           )
         )
       );
@@ -29304,7 +29447,7 @@ var BarChart = function (_React$Component) {
 
         d3.select(".barchart").selectAll("*").remove();
 
-        var margin = { top: 20, right: 30, bottom: 40, left: 55 },
+        var margin = { top: 20, right: 0, bottom: 40, left: 55 },
             width = 960 - margin.left - margin.right,
             height = 500 - margin.top - margin.bottom;
 
@@ -29317,14 +29460,16 @@ var BarChart = function (_React$Component) {
           return parseInt(el);
         }))]);
 
-        // x axis labels
+        // x axis ticks
         chart.append("g").attr("class", "axis axis--x").attr("transform", "translate(0," + height + ")").call(d3.axisBottom(x));
 
+        // x axis labels
         chart.append("text").attr("transform", "translate(" + width / 2 + " ," + (height + 35) + ")").style("text-anchor", "middle").text("State");
 
-        // y axis labels
+        // y axis ticks
         chart.append("g").attr("class", "axis axis--y").call(d3.axisLeft(y).ticks(10, "s"));
 
+        // y axis labels
         chart.append("text").attr("transform", "rotate(-90) translate(" + height / -2 + " , 0)").attr("dy", "-2.35em").text("Votes");
 
         // rectangles
@@ -29337,8 +29482,11 @@ var BarChart = function (_React$Component) {
   }, {
     key: 'filterData',
     value: function filterData() {
-      var filters = this.props.filters;
-      var data = this.props.data;
+      var _props = this.props,
+          data = _props.data,
+          voteType = _props.voteType,
+          voterParties = _props.voterParties;
+
       var labels = Object.keys(data.votes);
       // const dataElectoralDemocratMap = labels.map((state) => ({state: state, votes: data.votes[state].electoral.democrat}));
       // const dataElectoralRepublicanMap = labels.map((state) => ({state: state, votes: data.votes[state].electoral.republican}));
@@ -29346,12 +29494,12 @@ var BarChart = function (_React$Component) {
       // const dataPopularRepublicanMap = labels.map((state) => ({state: state, votes: data.votes[state].popular.republican}));
       // const dataPopularOtherMap = labels.map((state) => ({state: state, votes: data.votes[state].popular.other}));
       var filteredData = {};
-      filters.voterParties.forEach(function (party) {
-        if (data.votes["CA"][filters.voteType][party] > -1) {
+      voterParties.forEach(function (party) {
+        if (data.votes["CA"][voteType][party] > -1) {
           labels.forEach(function (state) {
-            filteredData[state] = filteredData[state] ? filteredData[state].concat({ party: party, votes: data.votes[state][filters.voteType][party] }) : [{ party: party, votes: data.votes[state][filters.voteType][party] }];
+            filteredData[state] = filteredData[state] ? filteredData[state].concat({ party: party, votes: data.votes[state][voteType][party] }) : [{ party: party, votes: data.votes[state][voteType][party] }];
           });
-          // filteredData[party] = labels.map((state) => ({state: state, votes: data.votes[state][filters.voteType][party]}));
+          // filteredData[party] = labels.map((state) => ({state: state, votes: data.votes[state][voteType][party]}));
         }
       });
 
@@ -29465,22 +29613,32 @@ var PieChart = function (_React$Component) {
     value: function filterData() {
       var _props = this.props,
           currentState = _props.currentState,
-          data = _props.data;
+          data = _props.data,
+          voteType = _props.voteType;
 
       var filteredData = [];
-      var parties = ["democrat", "republican", "other"];
-      if (currentState) {
-        data = data.votes[currentState].popular;
-        parties.forEach(function (party, idx) {
-          filteredData.push({
-            party: party,
-            votes: data[party],
-            percent: Math.round(100 * (data[party] / (data["democrat"] + data["republican"] + data["other"]))),
-            index: idx
-          });
-        });
-        return filteredData;
+      var parties = ["democrat", "republican"];
+      var currentTotal = void 0;
+      if (voteType === "popular") {
+        parties.push("other");
       }
+      if (currentState) {
+        if (data.votes[currentState][voteType]) {
+          data = data.votes[currentState][voteType];
+          currentTotal = data["democrat"] + data["republican"];
+          if (voteType === "popular") {
+            currentTotal += data["other"];
+          }
+          parties.forEach(function (party, idx) {
+            filteredData.push({
+              party: party,
+              votes: data[party],
+              percent: Math.round(100 * (data[party] / currentTotal))
+            });
+          });
+        }
+      }
+      return filteredData;
     }
   }, {
     key: 'd3Render',
@@ -29523,6 +29681,8 @@ var PieChart = function (_React$Component) {
           }).attr("dy", "0.35em").text(function (d) {
             return d.data.votes + " votes, (" + d.data.percent + "%)";
           });
+
+          g.append("text").attr("transform", "translate(-31 , 10)").attr("class", "current-state").text(this.props.currentState);
         }
       }
     }
@@ -29539,7 +29699,7 @@ var PieChart = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      return _react2.default.createElement('svg', { className: 'piechart chart', width: '960', height: '500' });
+      return _react2.default.createElement('svg', { className: 'piechart chart', width: '280', height: '250' });
     }
   }]);
 
@@ -72177,6 +72337,115 @@ function symbolObservablePonyfill(root) {
 
 	return result;
 };
+
+/***/ }),
+/* 365 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(12);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _d = __webpack_require__(72);
+
+var d3 = _interopRequireWildcard(_d);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var LineChart = function (_React$Component) {
+  _inherits(LineChart, _React$Component);
+
+  function LineChart(props) {
+    _classCallCheck(this, LineChart);
+
+    var _this = _possibleConstructorReturn(this, (LineChart.__proto__ || Object.getPrototypeOf(LineChart)).call(this, props));
+
+    _this.state = {
+      currentData: {}
+    };
+    _this.d3Render = _this.d3Render.bind(_this);
+    _this.filterData = _this.filterData.bind(_this);
+    return _this;
+  }
+
+  _createClass(LineChart, [{
+    key: 'filterData',
+    value: function filterData() {
+      var _props = this.props,
+          currentState = _props.currentState,
+          data = _props.data,
+          voteType = _props.voteType,
+          voterParties = _props.voterParties;
+
+      var filteredData = {};
+      var years = Object.keys(data);
+      if (currentState) {
+        voterParties.forEach(function (party) {
+          filteredData[party] = [];
+        });
+        years.forEach(function (year) {
+          if (data[year].votes[currentState][voteType]) {
+            voterParties.forEach(function (party) {
+              if (data[year].votes[currentState][voteType][party] > -1) {
+                filteredData[party].push(data[year].votes[currentState][voteType][party]);
+              }
+            });
+          }
+        });
+      }
+      console.log(filteredData);
+      return filteredData;
+    }
+  }, {
+    key: 'd3Render',
+    value: function d3Render() {
+      var filteredData = this.filterData();
+      if (filteredData) {
+        if (JSON.stringify(filteredData) != JSON.stringify(this.state.currentData)) {
+          this.setState({ currentData: filteredData });
+
+          d3.select(".linechart").selectAll("*").remove();
+        }
+      }
+    }
+  }, {
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.d3Render();
+    }
+  }, {
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate() {
+      this.d3Render();
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement('svg', { className: 'linechart chart', width: '280', height: '250' });
+    }
+  }]);
+
+  return LineChart;
+}(_react2.default.Component);
+
+exports.default = LineChart;
 
 /***/ })
 /******/ ]);
