@@ -29648,29 +29648,31 @@ var LineChart = function (_React$Component) {
 
           d3.select(".linechart").selectAll("*").remove();
 
-          var margin = { top: 20, right: 0, bottom: 40, left: 55 },
-              width = 250 - margin.left - margin.right,
-              height = 250 - margin.top - margin.bottom;
+          if (this.props.currentState) {
+            var margin = { top: 20, right: 0, bottom: 40, left: 55 },
+                width = 250 - margin.left - margin.right,
+                height = 250 - margin.top - margin.bottom;
 
-          var chart = d3.select(".linechart").attr("width", width + margin.left + margin.right).attr("height", height + margin.top + margin.bottom).append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+            var chart = d3.select(".linechart").attr("width", width + margin.left + margin.right).attr("height", height + margin.top + margin.bottom).append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-          var x = d3.scaleTime().range([0, width]).domain([years[0], years[years.length - 1]]);
+            var x = d3.scaleTime().range([0, width]).domain([years[0], years[years.length - 1]]);
 
-          var y = d3.scaleLinear().range([height, 0]).domain([0, Math.max.apply(null, nums)]);
+            var y = d3.scaleLinear().range([height, 0]).domain([0, Math.max.apply(null, nums)]);
 
-          chart.append("g").attr("class", "axis axis--x").attr("transform", "translate(0," + height + ")").call(d3.axisBottom(x).ticks(5));
+            chart.append("g").attr("class", "axis axis--x").attr("transform", "translate(0," + height + ")").call(d3.axisBottom(x).ticks(5));
 
-          chart.append("text").attr("transform", "translate(" + width / 2 + " ," + (height + 35) + ")").style("text-anchor", "middle").text("Years");
+            chart.append("text").attr("transform", "translate(" + width / 2 + " ," + (height + 35) + ")").style("text-anchor", "middle").text("Years");
 
-          chart.append("g").attr("class", "axis axis--y").call(d3.axisLeft(y).ticks(10, "s"));
+            chart.append("g").attr("class", "axis axis--y").call(d3.axisLeft(y).ticks(10, "s"));
 
-          chart.append("text").attr("transform", "rotate(-90) translate(" + height / -2 + " , 0)").attr("dy", "-2.35em").text("Votes");
+            chart.append("text").attr("transform", "rotate(-90) translate(" + height / -2 + " , 0)").attr("dy", "-2.35em").text("Votes");
 
-          chart.append("text").attr("transform", "translate(" + width / 4 + " , -5)").text("Historical Trends");
+            chart.append("text").attr("transform", "translate(" + width / 4 + " , -5)").text("Historical Trends");
 
-          Object.keys(data).forEach(function (party) {
-            _this2.drawLines(party, data[party], x, y, chart);
-          });
+            Object.keys(data).forEach(function (party) {
+              _this2.drawLines(party, data[party], x, y, chart);
+            });
+          }
         }
       }
     }
