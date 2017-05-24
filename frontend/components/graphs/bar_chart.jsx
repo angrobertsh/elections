@@ -87,8 +87,6 @@ class BarChart extends React.Component{
       }
     })
 
-    debugger
-
     labels.forEach((state) => {
       if(filteredData[state]){
         filteredData[state] = filteredData[state].sort((a, b) => (a.votes < b.votes ? 1 : - 1))
