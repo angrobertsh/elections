@@ -29929,6 +29929,11 @@ var Splash = function Splash() {
   return _react2.default.createElement(
     "div",
     null,
+    _react2.default.createElement(
+      "div",
+      { className: "heckyeah" },
+      "HECK YEAH!"
+    ),
     _react2.default.createElement("div", { id: "splash-background" }),
     _react2.default.createElement(
       "div",
@@ -29938,7 +29943,7 @@ var Splash = function Splash() {
         { className: "splash-title fadeIn" },
         "'MURICA"
       ),
-      _react2.default.createElement("div", { className: "splash-eagle fadeInFaster" })
+      _react2.default.createElement("div", { className: "splash-eagle fadeInSlower" })
     )
   );
 };

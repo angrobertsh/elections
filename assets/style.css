@@ -112,13 +112,13 @@ table {
 }
 
 .fadeIn {
-	-webkit-animation: fadesIn 1.25s ease-in; /* Safari 4.0 - 8.0 */
-	animation: fadesIn 1.25s ease-in;
+	-webkit-animation: fadesIn 1.25s ease; /* Safari 4.0 - 8.0 */
+	animation: fadesIn 1.25s ease;
 }
 
-.fadeInFaster {
-	-webkit-animation: fadesIn .5s ease; /* Safari 4.0 - 8.0 */
-	animation: fadesIn .5s ease;
+.fadeInSlower {
+	-webkit-animation: fadesIn 1.25s ease-in; /* Safari 4.0 - 8.0 */
+	animation: fadesIn 1.25s ease-in;
 }
 
 @keyframes fadesInOut {
@@ -160,6 +160,10 @@ table {
 
 /*Form*/
 
+#filter-form {
+	width: 1400px;
+}
+
 #filter-form-years {
 	float: left;
 	height: 100vh;
@@ -173,7 +177,8 @@ table {
 #filter-form-filters {
 	display: flex;
 	justify-content: flex-end;
-	padding: 0 25px 0 25px;
+	padding: 25px 25px 0 25px;
+	width: 1150px;
 }
 
 #filter-form-filters > * {

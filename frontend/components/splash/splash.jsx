@@ -14,11 +14,12 @@ const handleClick = (e) => {
 
 const Splash = () => (
   <div>
+    <div className="heckyeah">HECK YEAH!</div>
     <div id="splash-background">
     </div>
     <div id="splash" onClick={handleClick}>
       <div className="splash-title fadeIn">{"'MURICA"}</div>
-      <div className="splash-eagle fadeInFaster"></div>
+      <div className="splash-eagle fadeInSlower"></div>
     </div>
   </div>
 )
