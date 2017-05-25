@@ -193,7 +193,7 @@ table {
 #filter-form-filters {
 	display: flex;
 	justify-content: flex-end;
-	padding: 0 25px 0 25px;
+	padding: 15px 25px 0 25px;
 	width: 1150px;
 }
 
