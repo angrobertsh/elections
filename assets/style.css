@@ -60,6 +60,7 @@ table {
 	justify-content: center;
 	flex-direction: column;
 	align-items: center;
+	z-index: 2;
 }
 
 #splash-background{
@@ -68,6 +69,7 @@ table {
 	position: fixed;
 	background-image: url("./images/flag.jpg");
 	background-size: cover;
+	z-index: 1;
 	opacity: .8;
 }
 
@@ -79,7 +81,6 @@ table {
 }
 
 .splash-eagle{
-	display: block;
 	height: 200px;
 	width: 200px;
 	margin-top: 25px;
@@ -122,9 +123,9 @@ table {
 }
 
 @keyframes fadesInOut {
-    0%   {opacity: 0; z-index: 2;}
-    50%  {opacity: 1; z-index: 2;}
-    100% {opacity: 0; z-index: 2;}
+    0%   {opacity: 0; z-index: 3;}
+    50%  {opacity: 1; z-index: 3;}
+    100% {opacity: 0; z-index: 3;}
 }
 
 @keyframes fadesIn {
@@ -132,6 +133,24 @@ table {
     100% {opacity: 1;}
 }
 
+/*Underlay*/
+
+#github{
+	position: fixed;
+	right: 50%;
+	bottom: 10px;
+	opacity: .5;
+	width: 30px;
+	height: 30px;
+	background-image: url("./images/github.png");
+	border-radius: 40px;
+	background-size: cover;
+}
+
+#github:hover{
+	opacity: 1;
+	z-index: -5;
+}
 
 /*Display*/
 
@@ -160,9 +179,6 @@ table {
 
 /*Form*/
 
-#filter-form {
-	width: 1400px;
-}
 
 #filter-form-years {
 	float: left;
@@ -177,7 +193,7 @@ table {
 #filter-form-filters {
 	display: flex;
 	justify-content: flex-end;
-	padding: 25px 25px 0 25px;
+	padding: 0 25px 0 25px;
 	width: 1150px;
 }
 
