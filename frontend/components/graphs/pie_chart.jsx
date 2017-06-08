@@ -114,7 +114,7 @@ class PieChart extends React.Component{
   }
 
   render(){
-    return (<svg className="piechart chart" width="280" height="250"></svg>)
+    return (<svg className="piechart chart fadeIn" width="280" height="250"></svg>)
   }
 }
 

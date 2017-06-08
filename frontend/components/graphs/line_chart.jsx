@@ -113,7 +113,7 @@ class LineChart extends React.Component{
   }
 
   render(){
-    return (<svg className="linechart chart"></svg>)
+    return (<svg className="linechart chart fadeInSlower"></svg>)
   }
 }
 
