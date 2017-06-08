@@ -13,25 +13,52 @@ const Display = ({filters, data, updateFilterStore, toggleParties}) => (
           voteType={filters.voteType}
           voterParties={filters.voterParties}
           click={updateFilterStore} />
-        <div id="smaller-graphs">
-          <PieChart
-            data={data[filters.years]}
-            year={filters.years}
-            voteType={filters.voteType}
-            voterParties={filters.voterParties}
-            currentState={filters.currentState}
-            click={toggleParties}
-          />
-          <LineChart
-            data={data}
-            voteType={filters.voteType}
-            voterParties={filters.voterParties}
-            currentState={filters.currentState}
-          />
-        </div>
+        {
+          filters.currentState ? (
+            <div id="smaller-graphs">
+              <PieChart
+                data={data[filters.years]}
+                year={filters.years}
+                voteType={filters.voteType}
+                voterParties={filters.voterParties}
+                currentState={filters.currentState}
+                click={toggleParties}
+              />
+              <LineChart
+                data={data}
+                voteType={filters.voteType}
+                voterParties={filters.voterParties}
+                currentState={filters.currentState}
+              />
+            </div>) : (
+            <div id="state-holder">Click a State!</div>
+          )
+        }
       </div>
     </div>
   ) : null
+)
+
+const blah = (data, filters, toggleParties) => (
+  filters.currentState ? (
+    <div>
+      <PieChart
+        data={data[filters.years]}
+        year={filters.years}
+        voteType={filters.voteType}
+        voterParties={filters.voterParties}
+        currentState={filters.currentState}
+        click={toggleParties}
+      />
+      <LineChart
+        data={data}
+        voteType={filters.voteType}
+        voterParties={filters.voterParties}
+        currentState={filters.currentState}
+      />
+    </div>) : (
+    <div id="state-holder">State Info</div>
+  )
 )
 
 export default Display;

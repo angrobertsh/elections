@@ -61,6 +61,7 @@ table {
 	flex-direction: column;
 	align-items: center;
 	z-index: 2;
+	cursor: pointer;
 }
 
 #splash-background{
@@ -71,6 +72,7 @@ table {
 	background-size: cover;
 	z-index: 1;
 	opacity: .8;
+	cursor: pointer;
 }
 
 .splash-title{
@@ -78,6 +80,7 @@ table {
 	font-weight: bolder;
 	color: black;
 	text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
+	cursor: pointer;
 }
 
 .splash-eagle{
@@ -89,6 +92,7 @@ table {
 	background-image: url("./images/eagle.jpg");
 	background-position: -60px;
 	background-size: cover;
+	cursor: pointer;
 }
 
 .none{
@@ -175,6 +179,18 @@ table {
 #smaller-graphs{
 	display: flex;
 	flex-direction: column;
+}
+
+#state-holder{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 220px;
+	height: 400px;
+	color: rgba(224, 224, 224, .6);
+	text-align: center;
+	font-size: 4.5rem;
+	font-weight: bold;
 }
 
 /*Form*/
