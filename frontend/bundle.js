@@ -29690,7 +29690,11 @@ var LineChart = function (_React$Component) {
             voterParties.forEach(function (party) {
               if (data[year].votes[currentState][voteType][party] > -1) {
                 filteredData["nums"].push(data[year].votes[currentState][voteType][party]);
-                filteredData["data"][party].push({ votes: data[year].votes[currentState][voteType][party], year: new Date(year + "-02-02"), president: data[year].candidates[party] });
+                filteredData["data"][party].push({
+                  votes: data[year].votes[currentState][voteType][party],
+                  year: new Date(year + "-02-02"),
+                  president: data[year].candidates[party]
+                });
               }
             });
           }
