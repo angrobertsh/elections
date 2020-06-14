@@ -47,7 +47,7 @@ class LineChart extends React.Component{
         d3.select(".linechart").selectAll("*").remove();
 
         if(this.props.currentState){
-          const margin = {top: 20, right: 0, bottom: 40, left: 55},
+          const margin = {top: 20, right: 15, bottom: 40, left: 55},
               width = 250 - margin.left - margin.right,
               height = 250 - margin.top - margin.bottom;
 

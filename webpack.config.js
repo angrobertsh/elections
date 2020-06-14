@@ -10,7 +10,7 @@ module.exports = {
     filename: "bundle.js",
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: [/\.jsx?$/, /\.js?$/],
         exclude: /(node_modules)/,

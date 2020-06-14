@@ -39,6 +39,7 @@ class FilterForm extends React.Component{
       <div id="filter-form-container" ref={ filterForm => this.filterForm = filterForm }>
         <form id="filter-form">
           <div id="filter-form-years">
+            <label><input type="radio" onChange={this.update("years")} value="2016" checked={this.state.years === "2016"} />2016</label>
             <label><input type="radio" onChange={this.update("years")} value="2012" checked={this.state.years === "2012"} />2012</label>
             <label><input type="radio" onChange={this.update("years")} value="2008" checked={this.state.years === "2008"} />2008</label>
             <label><input type="radio" onChange={this.update("years")} value="2004" checked={this.state.years === "2004"} />2004</label>
